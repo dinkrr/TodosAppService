@@ -1,9 +1,11 @@
-﻿using System.Web.Http;
-using TodosApp.BLogic;
-using TodosModel;
-
-namespace TodosApp.Controllers
+﻿namespace TodosApp.Controllers
 {
+	using System.Web.Http;
+
+	using TodosApp.BLogic;
+
+	using TodosModel;
+
 	public class ToDosController : ApiController
 	{
 		private ITodoManager todoManager;

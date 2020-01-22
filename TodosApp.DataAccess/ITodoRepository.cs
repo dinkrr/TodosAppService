@@ -1,16 +1,17 @@
-﻿using System.Collections.Generic;
-using TodosModel;
-
-namespace TodosApp.DataAccess
+﻿namespace TodosApp.DataAccess
 {
+	using System.Collections.Generic;
+
+	using TodosModel;
+
 	public interface ITodoRepository
 	{
 		TodoModel CreateTodo(TodoModel todoModel);
 
-		TodoModel UpdateTodo(string Id, TodoModel todoModel);
+		int DeleteTodo(string id);
 
 		List<TodoModel> GetAllTodos();
 
-		int DeleteTodo(string id);
+		TodoModel UpdateTodo(string Id, TodoModel todoModel);
 	}
 }

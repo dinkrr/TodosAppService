@@ -1,15 +1,16 @@
-﻿using System.Collections.Generic;
-using TodosModel;
-
-namespace TodosApp.BLogic
+﻿namespace TodosApp.BLogic
 {
+	using System.Collections.Generic;
+
+	using TodosModel;
+
 	public interface ITodoManager
 	{
+		List<TodoModel> BringAllTodos();
+
 		TodoModel CreateATodo(TodoModel todoModel);
 
 		TodoModel EditATodo(string Id, TodoModel todoModel);
-
-		List<TodoModel> BringAllTodos();
 
 		int RemoveATodo(string id);
 	}

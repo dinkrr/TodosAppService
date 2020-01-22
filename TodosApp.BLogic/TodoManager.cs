@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
-using TodosApp.DataAccess;
-using TodosModel;
-
-namespace TodosApp.BLogic
+﻿namespace TodosApp.BLogic
 {
+	using System.Collections.Generic;
+
+	using TodosApp.DataAccess;
+
+	using TodosModel;
+
 	public class TodoManager : ITodoManager
 	{
 		private ITodoRepository todoRepository;
@@ -11,7 +13,6 @@ namespace TodosApp.BLogic
 		public TodoManager()
 		{
 			todoRepository = new TodoRepository();
-			;
 		}
 
 		public List<TodoModel> BringAllTodos()
