@@ -98,9 +98,7 @@
 			}
 			catch (Exception ex)
 			{
-				List<TodoModel> errorList = new List<TodoModel>();
-				errorList.Add(new TodoModel() { Id = Constants.NA, Title = Constants.NA, isComplete = false });
-				return errorList;
+				return null;
 			}
 			finally
 			{
@@ -112,7 +110,7 @@
 
 		public TodoModel UpdateTodo(string Id, TodoModel todoModel)
 		{
-			TodoModel outputTodoModel = new TodoModel();
+			TodoModel outputTodoModel = new TodoModel() { Id = Constants.NA, Title = Constants.NA, isComplete = false };
 			int numberOfRowsAffected = 0;
 			try
 			{

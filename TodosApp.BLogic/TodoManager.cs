@@ -10,9 +10,9 @@
 	{
 		private ITodoRepository todoRepository;
 
-		public TodoManager()
+		public TodoManager(ITodoRepository todoRepository)
 		{
-			todoRepository = new TodoRepository();
+			this.todoRepository = todoRepository;
 		}
 
 		public List<TodoModel> BringAllTodos()
