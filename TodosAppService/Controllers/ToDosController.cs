@@ -22,7 +22,7 @@
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		[HttpDelete]
+		[HttpDelete, Route("{id}")]
 		public IHttpActionResult Delete(string id)
 		{
 			bool isDeleted = todoManager.RemoveATodo(id) == 1 ? true : false;
