@@ -2,9 +2,10 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Configuration;
 	using System.Data;
 	using System.Data.SqlClient;
-	using System.Configuration;
+
 	using TodosModel;
 
 	public class TodoRepository : ITodoRepository
@@ -13,7 +14,8 @@
 
 		public TodoRepository()
 		{
-			connection = new SqlConnection(ConfigurationManager.ConnectionStrings["defaultConnection"].ConnectionString);
+			connection =
+				new SqlConnection(ConfigurationManager.ConnectionStrings["defaultConnection"].ConnectionString);
 		}
 
 		public bool CreateTodo(TodoModel todoModel)
@@ -35,7 +37,7 @@
 			}
 			catch (Exception ex)
 			{
-				//Log the exception here.
+				// Log the exception here.
 				return isCreated;
 			}
 			finally
@@ -61,7 +63,7 @@
 			}
 			catch (Exception e)
 			{
-				//Log the exception here.
+				// Log the exception here.
 				return isDeleted;
 			}
 			finally
@@ -93,18 +95,18 @@
 								isComplete = Convert.ToBoolean(row[Constants.IS_COMPLETED])
 							});
 				}
+
 				return outputList;
 			}
 			catch (Exception ex)
 			{
-				//Log the exception here.
+				// Log the exception here.
 				return null;
 			}
 			finally
 			{
 				connection.Close();
 			}
-
 		}
 
 		public bool UpdateTodo(TodoModel newTodoModel)
@@ -126,7 +128,7 @@
 			}
 			catch (Exception ex)
 			{
-				//Log the exception here
+				// Log the exception here
 				return isUpdated;
 			}
 			finally

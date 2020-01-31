@@ -26,6 +26,7 @@
 			{
 				return false;
 			}
+
 			return todoRepository.CreateTodo(todoModel);
 		}
 
@@ -35,6 +36,7 @@
 			{
 				return false;
 			}
+
 			return todoRepository.UpdateTodo(todoModel);
 		}
 
@@ -44,6 +46,7 @@
 			{
 				return false;
 			}
+
 			return todoRepository.DeleteTodo(id);
 		}
 	}

@@ -1,8 +1,8 @@
 ﻿namespace TodosApp.Controllers
 {
-    using System.Collections.Generic;
-    using System.Net;
-    using System.Web.Http;
+	using System.Collections.Generic;
+	using System.Net;
+	using System.Web.Http;
 
 	using TodosApp.BLogic;
 
@@ -33,6 +33,7 @@
 				HttpError error = new HttpError(errorMessage);
 				return Content(HttpStatusCode.NotFound, error);
 			}
+
 			string message = "Todo is Deleted successfully";
 			return Ok(message);
 		}
@@ -51,6 +52,7 @@
 				HttpError error = new HttpError(errorMessage);
 				return Content(HttpStatusCode.NotFound, error);
 			}
+
 			return Ok(todosList);
 		}
 
@@ -69,6 +71,7 @@
 				HttpError error = new HttpError(errorMessage);
 				return Content(HttpStatusCode.BadRequest, error);
 			}
+
 			string message = "Todo is created successfully";
 			return Ok(message);
 		}
@@ -89,6 +92,7 @@
 				HttpError error = new HttpError(errorMessage);
 				return Content(HttpStatusCode.BadRequest, error);
 			}
+
 			string message = "Todo is updated successfully";
 			return Ok(message);
 		}
