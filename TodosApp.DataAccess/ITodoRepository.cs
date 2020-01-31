@@ -6,12 +6,12 @@
 
 	public interface ITodoRepository
 	{
-		TodoModel CreateTodo(TodoModel todoModel);
+		bool CreateTodo(TodoModel todoModel);
 
-		int DeleteTodo(string id);
+		bool DeleteTodo(string id);
 
 		List<TodoModel> GetAllTodos();
 
-		TodoModel UpdateTodo(string Id, TodoModel todoModel);
+		bool UpdateTodo(TodoModel todoModel);
 	}
 }

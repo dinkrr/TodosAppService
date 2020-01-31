@@ -4,7 +4,7 @@
 	using System.Collections.Generic;
 	using System.Data;
 	using System.Data.SqlClient;
-
+	using System.Configuration;
 	using TodosModel;
 
 	public class TodoRepository : ITodoRepository
@@ -13,13 +13,12 @@
 
 		public TodoRepository()
 		{
-			connection = new SqlConnection(Constants.CONNECTION_STRING);
+			connection = new SqlConnection(ConfigurationManager.ConnectionStrings["defaultConnection"].ConnectionString);
 		}
 
-		public TodoModel CreateTodo(TodoModel todoModel)
+		public bool CreateTodo(TodoModel todoModel)
 		{
-			TodoModel outputTodoModel = new TodoModel() { Id = Constants.NA, Title = Constants.NA, isComplete = false };
-
+			bool isCreated = false;
 			int numberOfRowsAffected = 0;
 			try
 			{
@@ -31,25 +30,23 @@
 				command.Parameters.Add(Constants.TITLE_PARAM, SqlDbType.NVarChar).Value = todoModel.Title;
 				command.Parameters.Add(Constants.IS_COMPLETED_PARAM, SqlDbType.Bit).Value = todoModel.isComplete;
 				numberOfRowsAffected = command.ExecuteNonQuery();
-				if (numberOfRowsAffected == 1)
-				{
-					outputTodoModel = todoModel;
-				}
+				isCreated = numberOfRowsAffected > 0 ? true : false;
+				return isCreated;
 			}
 			catch (Exception ex)
 			{
-				return outputTodoModel;
+				//Log the exception here.
+				return isCreated;
 			}
 			finally
 			{
 				connection.Close();
 			}
-
-			return outputTodoModel;
 		}
 
-		public int DeleteTodo(string Id)
+		public bool DeleteTodo(string Id)
 		{
+			bool isDeleted = false;
 			int numberOfRowsAffected = 0;
 			try
 			{
@@ -59,17 +56,18 @@
 					connection);
 				command.Parameters.Add(Constants.ID_PARAM, SqlDbType.NVarChar).Value = Id;
 				numberOfRowsAffected = command.ExecuteNonQuery();
+				isDeleted = numberOfRowsAffected > 0 ? true : false;
+				return isDeleted;
 			}
 			catch (Exception e)
 			{
-				return numberOfRowsAffected;
+				//Log the exception here.
+				return isDeleted;
 			}
 			finally
 			{
 				connection.Close();
 			}
-
-			return numberOfRowsAffected;
 		}
 
 		public List<TodoModel> GetAllTodos()
@@ -95,9 +93,11 @@
 								isComplete = Convert.ToBoolean(row[Constants.IS_COMPLETED])
 							});
 				}
+				return outputList;
 			}
 			catch (Exception ex)
 			{
+				//Log the exception here.
 				return null;
 			}
 			finally
@@ -105,37 +105,34 @@
 				connection.Close();
 			}
 
-			return outputList;
 		}
 
-		public TodoModel UpdateTodo(string Id, TodoModel todoModel)
+		public bool UpdateTodo(TodoModel newTodoModel)
 		{
-			TodoModel outputTodoModel = new TodoModel() { Id = Constants.NA, Title = Constants.NA, isComplete = false };
+			bool isUpdated = false;
 			int numberOfRowsAffected = 0;
 			try
 			{
 				connection.Open();
 				SqlCommand command = new SqlCommand(
-					$"UPDATE TODO SET {Constants.IS_COMPLETED} = {Constants.IS_COMPLETED_PARAM} where {Constants.ID} = {Constants.ID_PARAM};",
+					$"UPDATE TODO SET {Constants.IS_COMPLETED} = {Constants.IS_COMPLETED_PARAM}, {Constants.TITLE} = {Constants.TITLE_PARAM} where {Constants.ID} = {Constants.ID_PARAM};",
 					connection);
-				command.Parameters.Add(Constants.ID_PARAM, SqlDbType.NVarChar).Value = Id;
-				command.Parameters.Add(Constants.IS_COMPLETED_PARAM, SqlDbType.Bit).Value = todoModel.isComplete;
+				command.Parameters.Add(Constants.ID_PARAM, SqlDbType.NVarChar).Value = newTodoModel.Id;
+				command.Parameters.Add(Constants.IS_COMPLETED_PARAM, SqlDbType.Bit).Value = newTodoModel.isComplete;
+				command.Parameters.Add(Constants.TITLE_PARAM, SqlDbType.NVarChar).Value = newTodoModel.Title;
 				numberOfRowsAffected = command.ExecuteNonQuery();
-				if (numberOfRowsAffected == 1)
-				{
-					outputTodoModel = todoModel;
-				}
+				isUpdated = numberOfRowsAffected > 0 ? true : false;
+				return isUpdated;
 			}
 			catch (Exception ex)
 			{
-				return outputTodoModel;
+				//Log the exception here
+				return isUpdated;
 			}
 			finally
 			{
 				connection.Close();
 			}
-
-			return outputTodoModel;
 		}
 	}
 }

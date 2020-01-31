@@ -8,10 +8,10 @@
 	{
 		List<TodoModel> BringAllTodos();
 
-		TodoModel CreateATodo(TodoModel todoModel);
+		bool CreateATodo(TodoModel todoModel);
 
-		TodoModel EditATodo(string Id, TodoModel todoModel);
+		bool EditATodo(TodoModel todoModel);
 
-		int RemoveATodo(string id);
+		bool RemoveATodo(string id);
 	}
 }

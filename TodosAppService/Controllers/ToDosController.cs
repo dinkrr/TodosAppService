@@ -22,13 +22,14 @@
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		[HttpDelete, Route("{id}")]
+		[HttpDelete]
+		[Route("api/Todos/{id}")]
 		public IHttpActionResult Delete(string id)
 		{
-			bool isDeleted = todoManager.RemoveATodo(id) == 1 ? true : false;
+			bool isDeleted = todoManager.RemoveATodo(id);
 			if (!isDeleted)
 			{
-				string errorMessage = $"Error occurred while deleting the Todo with {id}, Kindly see logs.";
+				string errorMessage = "Error occurred while deleting the Todo, Kindly see logs.";
 				HttpError error = new HttpError(errorMessage);
 				return Content(HttpStatusCode.NotFound, error);
 			}
@@ -61,14 +62,15 @@
 		[HttpPost]
 		public IHttpActionResult Post([FromBody] TodoModel todoValue)
 		{
-			TodoModel todoModel = todoManager.CreateATodo(todoValue);
-			if (todoModel.Id == "NA" && todoModel.Title == "NA" && todoModel.isComplete == false)
+			bool isCreated = todoManager.CreateATodo(todoValue);
+			if (!isCreated)
 			{
-				string errorMessage = $"Unable to Create the Todo, Kindly see the logs.";
+				string errorMessage = "Unable to Create the Todo, Kindly see the logs.";
 				HttpError error = new HttpError(errorMessage);
 				return Content(HttpStatusCode.BadRequest, error);
 			}
-			return Ok(todoManager.CreateATodo(todoValue));
+			string message = "Todo is created successfully";
+			return Ok(message);
 		}
 
 		/// <summary>
@@ -78,16 +80,17 @@
 		/// <param name="todoValue"></param>
 		/// <returns></returns>
 		[HttpPut]
-		public IHttpActionResult Put(string id, [FromBody] TodoModel todoValue)
+		public IHttpActionResult Put([FromBody] TodoModel todoValue)
 		{
-			TodoModel todoModel = todoManager.CreateATodo(todoValue);
-			if (todoModel.Id == "NA" && todoModel.Title == "NA" && todoModel.isComplete == false)
+			bool isUpdated = todoManager.EditATodo(todoValue);
+			if (!isUpdated)
 			{
-				string errorMessage = $"Unable to update the Todo, Kindly see the logs.";
+				string errorMessage = "Unable to update the Todo, Kindly see the logs.";
 				HttpError error = new HttpError(errorMessage);
 				return Content(HttpStatusCode.BadRequest, error);
 			}
-			return Ok(todoManager.EditATodo(id, todoValue));
+			string message = "Todo is updated successfully";
+			return Ok(message);
 		}
 	}
 }

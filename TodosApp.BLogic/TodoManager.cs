@@ -20,18 +20,30 @@
 			return todoRepository.GetAllTodos();
 		}
 
-		public TodoModel CreateATodo(TodoModel todoModel)
+		public bool CreateATodo(TodoModel todoModel)
 		{
+			if (todoModel == null)
+			{
+				return false;
+			}
 			return todoRepository.CreateTodo(todoModel);
 		}
 
-		public TodoModel EditATodo(string Id, TodoModel todoModel)
+		public bool EditATodo(TodoModel todoModel)
 		{
-			return todoRepository.UpdateTodo(Id, todoModel);
+			if (todoModel == null)
+			{
+				return false;
+			}
+			return todoRepository.UpdateTodo(todoModel);
 		}
 
-		public int RemoveATodo(string id)
+		public bool RemoveATodo(string id)
 		{
+			if (id == null)
+			{
+				return false;
+			}
 			return todoRepository.DeleteTodo(id);
 		}
 	}
